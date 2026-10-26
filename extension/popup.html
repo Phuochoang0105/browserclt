@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Browser Control MCP</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="header">
+    <div class="logo-group">
+      <div class="logo-icon">🌐</div>
+      <div>
+        <h2>Browser MCP</h2>
+        <span class="version">v1.0.0</span>
+      </div>
+    </div>
+    <div id="statusBadge" class="status-badge disconnected">
+      <span class="dot"></span>
+      <span id="statusText">Connecting...</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <label class="section-title">WebSocket Server</label>
+    <div class="input-group">
+      <span class="prefix">ws://127.0.0.1:</span>
+      <input type="number" id="portInput" value="3025" min="1024" max="65535" />
+      <button id="saveBtn" class="btn primary">Save</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <label class="section-title">Active Tab</label>
+    <div class="tab-card">
+      <div id="tabTitle" class="tab-title">Fetching active tab...</div>
+      <div id="tabUrl" class="tab-url">...</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <label class="section-title">AI Actions Status</label>
+    <div class="info-list">
+      <div class="info-item">
+        <span>DOM Control</span>
+        <span class="pill green">Active</span>
+      </div>
+      <div class="info-item">
+        <span>Markdown Collector</span>
+        <span class="pill green">Enabled</span>
+      </div>
+      <div class="info-item">
+        <span>React / Vue Synthetic Events</span>
+        <span class="pill green">Supported</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <button id="reconnectBtn" class="btn secondary">Reconnect Server</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

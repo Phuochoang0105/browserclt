@@ -1,0 +1,6 @@
+node_modules/
+dist/
+exports/*.png
+exports/*.md
+!exports/.gitkeep
+.DS_Store

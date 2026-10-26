@@ -1,0 +1,29 @@
+{
+  "name": "browser-ctl-mcp",
+  "version": "1.0.0",
+  "description": "Browser Control MCP Server with Chrome Extension Integration",
+  "type": "module",
+  "main": "dist/server/src/index.js",
+  "bin": {
+    "browser-ctl-mcp": "./dist/server/src/index.js"
+  },
+  "scripts": {
+    "start": "tsx server/src/index.ts",
+    "dev": "tsx watch server/src/index.ts",
+    "build": "tsc",
+    "test-ws": "node -e \"import('./server/src/wsServer.js')\""
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.3",
+    "turndown": "^7.2.2",
+    "ws": "^8.18.3",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/turndown": "^5.0.5",
+    "@types/ws": "^8.18.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
