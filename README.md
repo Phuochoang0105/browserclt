@@ -51,12 +51,11 @@ npm run build
 2. Navigate to: `chrome://extensions/`
 3. Enable the **"Developer mode"** toggle in the top-right corner.
 4. Click **"Load unpacked"**.
-5. Select the `extension` folder located in this repository:
-   ```
-   /Users/nph/Desktop/personal/browser_ctl_mcp/extension
-   ```
+5. Select the `extension` folder located inside this repository:
+   - **macOS / Linux**: `/path/to/browser_ctl_mcp/extension`
+   - **Windows**: `C:\path\to\browser_ctl_mcp\extension`
 6. Pin the **Browser Control MCP Bridge** extension to your browser toolbar.
-7. Once the MCP Server is running, the badge will show a green `ON` indicator.
+7. Once the MCP Server is running, the extension badge will show a green `ON` indicator.
 
 ---
 
@@ -69,13 +68,14 @@ Open your Claude Desktop configuration file:
 
 Add the following to `mcpServers`:
 
+**macOS / Linux:**
 ```json
 {
   "mcpServers": {
     "browser-ctl": {
       "command": "node",
       "args": [
-        "/Users/nph/Desktop/personal/browser_ctl_mcp/dist/server/src/index.js"
+        "/path/to/browser_ctl_mcp/dist/server/src/index.js"
       ],
       "env": {
         "BROWSER_MCP_PORT": "3025"
@@ -85,14 +85,46 @@ Add the following to `mcpServers`:
 }
 ```
 
+**Windows:**
+```json
+{
+  "mcpServers": {
+    "browser-ctl": {
+      "command": "node",
+      "args": [
+        "C:/path/to/browser_ctl_mcp/dist/server/src/index.js"
+      ],
+      "env": {
+        "BROWSER_MCP_PORT": "3025"
+      }
+    }
+  }
+}
+```
+*(Note: On Windows, use forward slashes `/` or double backslashes `\\\\` in JSON paths).*
+
 #### 2. For Antigravity / Cursor / Windsurf
 Add to your workspace or user MCP configuration (`mcp.json` or IDE MCP settings):
+
+**macOS / Linux:**
 ```json
 {
   "browser-ctl": {
     "command": "node",
     "args": [
-      "/Users/nph/Desktop/personal/browser_ctl_mcp/dist/server/src/index.js"
+      "/path/to/browser_ctl_mcp/dist/server/src/index.js"
+    ]
+  }
+}
+```
+
+**Windows:**
+```json
+{
+  "browser-ctl": {
+    "command": "node",
+    "args": [
+      "C:/path/to/browser_ctl_mcp/dist/server/src/index.js"
     ]
   }
 }

@@ -6,7 +6,7 @@ import {
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import { BrowserBridge } from './wsServer.js';
-import { saveMarkdownFile } from './utils/fileExport.js';
+import { saveMarkdownFile, saveBinaryFile } from './utils/fileExport.js';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -455,18 +455,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         let savedPath: string | undefined;
 
         if (args.outputPath || !args.outputPath) {
-          const exportDir = path.resolve(process.cwd(), 'exports');
-          if (!fs.existsSync(exportDir)) {
-            fs.mkdirSync(exportDir, { recursive: true });
-          }
-          savedPath = args.outputPath
-            ? path.isAbsolute(args.outputPath as string)
-              ? (args.outputPath as string)
-              : path.resolve(process.cwd(), args.outputPath as string)
-            : path.join(exportDir, `screenshot_${Date.now()}.png`);
-
           const base64Data = result.dataUrl.replace(/^data:image\/png;base64,/, '');
-          fs.writeFileSync(savedPath, Buffer.from(base64Data, 'base64'));
+          savedPath = saveBinaryFile(
+            Buffer.from(base64Data, 'base64'),
+            args.outputPath as string | undefined,
+            'screenshot',
+            'png'
+          );
           message += ` Saved to ${savedPath}`;
         }
 
