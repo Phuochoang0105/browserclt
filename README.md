@@ -1,17 +1,17 @@
 # 🌐 Browser Control MCP (Model Context Protocol) + Chrome Extension
 
-Dự án kết nối trực tiếp các **AI Agent** (Claude Desktop, Antigravity, Cursor, Windsurf, v.v.) với trình duyệt Google Chrome / Chromium thông qua một **Browser Extension (Manifest V3)** và **MCP Server**.
+A bridge connecting **AI Agents** (Claude Desktop, Antigravity, Cursor, Windsurf, etc.) directly to Chromium-based browsers (Google Chrome, Brave, Edge, Arc) via a **Browser Extension (Manifest V3)** and an **MCP Server**.
 
-Giải pháp này cho phép AI:
-- 🚀 **Điều khiển trực tiếp trình duyệt cá nhân**: Tận dụng các phiên đăng nhập (Google, Facebook, GitHub, Jira, Intranet...), cookie, xác thực có sẵn của bạn mà không lo bị chặn bot hay Captcha.
-- 📖 **Đọc & trích xuất nội dung bài viết**: Tự động lọc sạch quảng cáo, menu rác và chuyển đổi HTML thành Markdown chuẩn.
-- 💾 **Tự động lưu nội dung thành file `.md`**: Xuất toàn bộ bài viết, tài liệu nghiên cứu trực tiếp về thư mục `exports/` trong máy tính.
-- 🖱️ **Tương tác thông minh**: Quét danh sách phần tử tương tác (nút bấm, ô input, liên kết), tự động click, điền biểu mẫu (hỗ trợ cả React/Vue/Angular synthetic events), cuộn trang, nhấn phím bàn phím.
-- 📸 **Chụp ảnh màn hình**: Chụp lại trang web đang duyệt và lưu ảnh PNG.
+This architecture empowers AI to:
+- 🚀 **Control your real browser session**: Leverage your existing logins (Google, GitHub, Jira, Intranet, etc.), cookies, and local session state without triggering anti-bot protections or CAPTCHAs.
+- 📖 **Read & extract clean page content**: Automatically strip ads, cookie banners, navigation menus, and convert rich HTML into clean, well-structured Markdown.
+- 💾 **Export web content to Markdown (`.md`) files**: Seamlessly save research, documentation, or articles directly to the local `exports/` directory.
+- 🖱️ **Interact with web elements**: Automatically scan interactive elements (buttons, links, inputs), click targets, type into fields (with full React/Vue/Angular synthetic event support), scroll, and send keystrokes.
+- 📸 **Capture screenshots**: Take visual screenshots of the active browser tab and save as PNG.
 
 ---
 
-## 🏗️ Kiến trúc hệ thống
+## 🏗️ Architecture
 
 ```mermaid
 flowchart LR
@@ -37,37 +37,37 @@ flowchart LR
 
 ---
 
-## 🛠️ Hướng dẫn cài đặt nhanh (3 bước)
+## 🛠️ Quick Setup (3 Steps)
 
-### Bước 1: Build MCP Server
-Trong thư mục dự án (`browser_ctl_mcp`):
+### Step 1: Build the MCP Server
+Inside the project directory (`browser_ctl_mcp`):
 ```bash
 npm install
 npm run build
 ```
 
-### Bước 2: Cài Extension vào Chrome
-1. Mở trình duyệt Chrome (hoặc Brave, Edge, Cốc Cốc, Arc).
-2. Truy cập vào: `chrome://extensions/`
-3. Bật công tắc **"Developer mode"** (Chế độ cho nhà phát triển) ở góc trên bên phải.
-4. Bấm nút **"Load unpacked"** (Tải tiện ích đã giải nén).
-5. Chọn thư mục `extension` nằm trong dự án:
+### Step 2: Install Extension in Chrome
+1. Open Google Chrome (or Brave, Edge, Arc).
+2. Navigate to: `chrome://extensions/`
+3. Enable the **"Developer mode"** toggle in the top-right corner.
+4. Click **"Load unpacked"**.
+5. Select the `extension` folder located in this repository:
    ```
    /Users/nph/Desktop/personal/browser_ctl_mcp/extension
    ```
-6. Bạn sẽ thấy biểu tượng tiện ích **Browser Control MCP Bridge** xuất hiện. Hãy ghim nó lên thanh công cụ của trình duyệt.
-7. Khi MCP Server chạy, huy hiệu trên icon sẽ chuyển sang màu xanh lá cây `ON` (Connected).
+6. Pin the **Browser Control MCP Bridge** extension to your browser toolbar.
+7. Once the MCP Server is running, the badge will show a green `ON` indicator.
 
 ---
 
-### Bước 3: Cấu hình MCP Server vào AI Client
+### Step 3: Configure MCP in your AI Client
 
-#### 1. Dành cho Claude Desktop
-Mở file cấu hình Claude Desktop:
+#### 1. For Claude Desktop
+Open your Claude Desktop configuration file:
 - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
-Thêm cấu hình sau vào mục `mcpServers`:
+Add the following to `mcpServers`:
 
 ```json
 {
@@ -85,8 +85,8 @@ Thêm cấu hình sau vào mục `mcpServers`:
 }
 ```
 
-#### 2. Dành cho Antigravity / Cursor / Windsurf
-Cấu hình tương tự trong file settings MCP (`mcp.json` hoặc UI settings):
+#### 2. For Antigravity / Cursor / Windsurf
+Add to your workspace or user MCP configuration (`mcp.json` or IDE MCP settings):
 ```json
 {
   "browser-ctl": {
@@ -100,71 +100,71 @@ Cấu hình tương tự trong file settings MCP (`mcp.json` hoặc UI settings)
 
 ---
 
-## 🧰 Danh sách các Tool AI Agent có thể sử dụng
+## 🧰 Available MCP Tools
 
-| Tên Tool | Mô tả |
+| Tool Name | Description |
 | :--- | :--- |
-| `browser_get_status` | Kiểm tra kết nối với Extension, lấy danh sách tab và thông tin tab đang mở. |
-| `browser_open_url` | Mở URL mới hoặc điều hướng tab hiện tại đến địa chỉ mong muốn. |
-| `browser_read_page` | Đọc nội dung trang hiện tại dạng `markdown` (mặc định), `text`, hoặc `html`. Tự động nhận diện bài viết chính. |
-| `browser_export_markdown` | **Thu thập & trích xuất nội dung trang thành file `.md`** lưu vào thư mục `exports/` hoặc đường dẫn do AI chỉ định. |
-| `browser_get_interactive_elements` | Quét toàn bộ nút bấm, link, ô nhập liệu trên trang kèm chỉ số index, text, CSS selector và tọa độ. |
-| `browser_click` | Click vào phần tử bằng CSS selector, từ khóa văn bản (`text`), hoặc số thứ tự `elementIndex`. |
-| `browser_fill_input` | Gõ văn bản vào ô input/textarea. Hỗ trợ React synthetic event và tùy chọn tự động bấm Enter. |
-| `browser_press_key` | Nhấn phím bàn phím (`Enter`, `Tab`, `Escape`, `ArrowDown`, ...). |
-| `browser_scroll` | Cuộn trang (`down`, `up`, `top`, `bottom`) với khoảng cách tùy chọn. |
-| `browser_evaluate_js` | Thực thi mã JavaScript tùy biến trực tiếp trên trang web và trả về kết quả JSON. |
-| `browser_screenshot` | Chụp ảnh màn hình tab hiện tại và lưu thành file `.png`. |
+| `browser_get_status` | Check extension connection status, active tab details, and all open tabs. |
+| `browser_open_url` | Navigate the active tab or open a new tab with a specified URL. |
+| `browser_read_page` | Extract page content as clean `markdown` (default), plain `text`, or `html`. Intelligently isolates primary article body. |
+| `browser_export_markdown` | **Extract webpage content as Markdown and save directly to a `.md` file** in `./exports/` or a custom path. |
+| `browser_get_interactive_elements` | Scan page for interactive elements (buttons, links, inputs) with index, text, CSS selector, and visibility. |
+| `browser_click` | Click an element by CSS selector, visible text, or numeric `elementIndex`. |
+| `browser_fill_input` | Fill text into an input field or textarea. Supports React/Vue synthetic events and optional Enter key press. |
+| `browser_press_key` | Dispatch keyboard keys (`Enter`, `Tab`, `Escape`, `ArrowDown`, etc.). |
+| `browser_scroll` | Scroll page (`down`, `up`, `top`, `bottom`) with custom pixel distance. |
+| `browser_evaluate_js` | Execute custom JavaScript in page context and return the serialized result. |
+| `browser_screenshot` | Capture visual screenshot of the current tab and save as PNG. |
 
 ---
 
-## 💡 Ví dụ câu lệnh mẫu để yêu cầu AI Agent
+## 💡 Example Prompts for AI Agents
 
-Sau khi cài đặt xong, bạn có thể ra lệnh cho AI trong khung chat:
+Once configured, you can interact with your AI naturally:
 
-1. **Thu thập tài liệu sang file Markdown**:
-   > *"Đọc bài viết đang mở trên trình duyệt của tôi và xuất thành file Markdown vào thư mục exports."*
-   > → AI sẽ gọi `browser_export_markdown` và báo cho bạn file `.md` vừa tạo.
+1. **Collect & Export Research to Markdown**:
+   > *"Read the article currently open on my browser tab and export it as a Markdown file into the exports folder."*
+   > → AI invokes `browser_export_markdown` and returns the saved file path.
 
-2. **Tự động tìm kiếm và điều khiển web**:
-   > *"Hãy mở trang https://news.ycombinator.com, tìm bài viết đầu tiên nói về AI và click vào đọc, sau đó tóm tắt lại cho tôi."*
-   > → AI sẽ mở URL, quét link bài viết bằng `browser_get_interactive_elements`, click vào và đọc nội dung bằng `browser_read_page`.
+2. **Automate Web Search & Navigation**:
+   > *"Navigate to https://news.ycombinator.com, find the first article about AI, click it, and summarize the key takeaways."*
+   > → AI opens the URL, inspects interactive elements with `browser_get_interactive_elements`, clicks the link with `browser_click`, and reads content via `browser_read_page`.
 
-3. **Điền form & đăng nhập**:
-   > *"Tìm ô tìm kiếm trên trang đang mở, nhập từ khóa 'Deep Learning' rồi bấm Enter."*
-   > → AI sẽ gọi `browser_fill_input` với `{ value: "Deep Learning", pressEnter: true }`.
+3. **Fill Forms & Search**:
+   > *"Find the search input on the active page, type 'Model Context Protocol', and press Enter."*
+   > → AI executes `browser_fill_input` with `{ value: "Model Context Protocol", pressEnter: true }`.
 
 ---
 
-## 📁 Cấu trúc thư mục
+## 📁 Repository Structure
 
 ```
 browser_ctl_mcp/
 ├── server/
 │   ├── src/
-│   │   ├── index.ts        # Entrypoint MCP Server (stdio transport & tool handlers)
-│   │   ├── wsServer.ts     # WebSocket server kết nối extension (:3025)
-│   │   ├── types.ts        # Types & Interfaces
+│   │   ├── index.ts          # MCP Server entrypoint (stdio transport & tool handlers)
+│   │   ├── wsServer.ts       # WebSocket server bridging to Chrome extension (:3025)
+│   │   ├── types.ts          # TypeScript type definitions
 │   │   └── utils/
-│   │       └── fileExport.ts # Tiện ích lưu Markdown file vào disk
+│   │       └── fileExport.ts # Markdown file saving utilities
 ├── extension/
-│   ├── manifest.json       # Manifest V3 cấu hình Extension
-│   ├── background.js       # Service worker quản lý WebSocket & Tab
-│   ├── content.js          # In-page engine: trích xuất Markdown, click, fill input
-│   ├── popup.html          # Giao diện popup tiện ích
+│   ├── manifest.json         # Manifest V3 extension configuration
+│   ├── background.js         # Service worker managing WebSocket and tabs
+│   ├── content.js            # In-page DOM engine: Markdown extraction, clicks, input
+│   ├── popup.html            # Extension popup user interface
 │   ├── popup.css
 │   ├── popup.js
-│   └── icons/              # Icon tiện ích (16, 48, 128)
-├── exports/                # Thư mục chứa các file .md được AI thu thập
+│   └── icons/                # Extension icons (16x16, 48x48, 128x128)
+├── exports/                  # Directory where exported Markdown files are saved
 ├── test/
-│   └── mock_extension_test.ts # Script kiểm thử tự động
+│   └── mock_extension_test.ts# Automated end-to-end integration test
 ├── package.json
 └── tsconfig.json
 ```
 
 ---
 
-## 🔒 An toàn & Bảo mật
-- MCP Server chỉ lắng nghe tại `127.0.0.1` (localhost), không mở ra mạng ngoài.
-- Toàn bộ dữ liệu truyền nhận nội bộ giữa trình duyệt của bạn và AI Agent chạy trên máy tính cá nhân.
-- Không gửi bất kỳ dữ liệu nào lên server bên thứ ba ngoài máy tính của bạn.
+## 🔒 Security & Privacy
+- The MCP WebSocket server binds strictly to `127.0.0.1` (localhost) and is not exposed to external networks.
+- All browser interactions and extracted contents remain purely local between your browser and local AI client.
+- No telemetry, analytics, or third-party cloud services are involved.

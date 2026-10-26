@@ -143,7 +143,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
             },
             text: {
               type: 'string',
-              description: 'Exact or partial visible text of the button or link to click (e.g. "Đăng nhập" or "Submit")',
+              description: 'Exact or partial visible text of the button or link to click (e.g. "Sign In" or "Submit")',
             },
             tabId: {
               type: 'number',
