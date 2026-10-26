@@ -4,3 +4,4 @@ exports/*.png
 exports/*.md
 !exports/.gitkeep
 .DS_Store
+NVIDIA_*.md

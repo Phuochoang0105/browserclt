@@ -9,21 +9,24 @@ export function sanitizeFileName(name: string): string {
 }
 
 export function saveMarkdownFile(content: string, customPath?: string, title?: string): string {
-  const exportsDir = path.resolve(process.cwd(), 'exports');
-  if (!fs.existsSync(exportsDir)) {
-    fs.mkdirSync(exportsDir, { recursive: true });
-  }
+  const baseDir = (process.cwd() && process.cwd() !== '/')
+    ? process.cwd()
+    : path.resolve(__dirname, '../..');
 
   let finalPath: string;
   if (customPath) {
     finalPath = path.isAbsolute(customPath)
       ? customPath
-      : path.resolve(process.cwd(), customPath);
+      : path.resolve(baseDir, customPath);
     const parentDir = path.dirname(finalPath);
     if (!fs.existsSync(parentDir)) {
       fs.mkdirSync(parentDir, { recursive: true });
     }
   } else {
+    const exportsDir = path.resolve(baseDir, 'exports');
+    if (!fs.existsSync(exportsDir)) {
+      fs.mkdirSync(exportsDir, { recursive: true });
+    }
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
     const safeTitle = title ? sanitizeFileName(title) : 'page';
     const filename = `${safeTitle}_${timestamp}.md`;
